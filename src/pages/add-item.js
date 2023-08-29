@@ -2,17 +2,23 @@ import React, { useState } from "react";
 import "../style/add-item.css";
 
 export default function AddItem() {
-  const [nameInput, setNameInput] = useState();
-  const [priceInput, setPriceInput] = useState();
+  const [nameInput, setNameInput] = useState("");
+  const [priceInput, setPriceInput] = useState("");
+  const [urlInput, setURLInput] = useState("");
 
   const handleSubmit = () => {
     // get endpoint to put in fetch parentesis with eidan!!!
-    fetch("LINK FOR API HERE", {
-      methos: "POST",
-      headers: { "content-type": "application/json" },
+    fetch("https://capback-96c2a9a7317f.herokuapp.com/item/add", {
+      method: "POST",
+      mode: "cors",
+      headers: {
+        "content-type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+      },
       body: JSON.stringify({
         name: nameInput,
         price: parseFloat(priceInput),
+        url: urlInput,
       }),
     })
       .then((response) => response.json())
@@ -38,7 +44,14 @@ export default function AddItem() {
         value={priceInput}
         onChange={(event) => setPriceInput(event.target.value)}
       />
-      <button onClick={handleSubmit()}>Add</button>
+      <input
+        type="text"
+        placeholder="url"
+        name="priceInput"
+        value={urlInput}
+        onChange={(event) => setURLInput(event.target.value)}
+      />
+      <button onClick={handleSubmit}>Add</button>
     </div>
   );
 }
